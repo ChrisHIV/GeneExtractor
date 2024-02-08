@@ -69,7 +69,7 @@ echo "$BlastFields" | tr ' ' ',' > "$TempFile_BlastOut2"
 awk -F, '{if ($'$field_evalue' <= '$MaxEvalue') print}' "$TempFile_BlastOut1" \
 >> "$TempFile_BlastOut2"
 NumHitsPlus1=$(wc -l "$TempFile_BlastOut2" | awk '{print $1}')
-if [[ $NumHitsPlus1 -eq 1 ]]; then
+if [[ $NumHitsPlus1 -eq 0 ]]; then
   echo "No hits survived the requirement that evalue <= $MaxEvalue."\
   "Quitting." >&2
   exit 1
