@@ -58,7 +58,7 @@ NumFields=$(echo $BlastFields | wc -w)
 
 # Check there was at least one hit.
 NumHits=$(wc -l "$TempFile_BlastOut1" | awk '{print $1}')
-if [[ $NumHits -eq 1 ]]; then
+if [[ $NumHits -eq 0 ]]; then
   echo "There were no hits when blasting $SeqsForExtraction against"\
   "$DataBaseStem. Quitting." >&2
   exit 1
@@ -69,7 +69,7 @@ echo "$BlastFields" | tr ' ' ',' > "$TempFile_BlastOut2"
 awk -F, '{if ($'$field_evalue' <= '$MaxEvalue') print}' "$TempFile_BlastOut1" \
 >> "$TempFile_BlastOut2"
 NumHitsPlus1=$(wc -l "$TempFile_BlastOut2" | awk '{print $1}')
-if [[ $NumHitsPlus1 -eq 0 ]]; then
+if [[ $NumHitsPlus1 -eq 1 ]]; then
   echo "No hits survived the requirement that evalue <= $MaxEvalue."\
   "Quitting." >&2
   exit 1
